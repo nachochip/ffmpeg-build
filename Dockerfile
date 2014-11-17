@@ -1,13 +1,20 @@
-# ffmpeg build
-# based on Julien Rottenberg <julien@rottenberg.info>
-# based on docker image  rottenberg/ffmpeg
+# ffmpeg build - simply change versions to compile
+# This Dockerfile is based on docker image  rottenberg/ffmpeg
+# The purpose behind this is to build ffmpeg inside a debian container.
+# 	Then the next step is to export the compiled binaries into an untouched base debian image
+# 	This results in a ~128MB image to use, vs a ~395MB file.
+# 	FYI:  this image is useable....I just like having a smaller base image to download.
 
 FROM		debian:wheezy
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
+# some of these options I don't use, so I commented them out.
+# My builds include only FFMPEG + libfdk_aac + latest x264
+# I don't need anything else.  If you need anything included, email me and I can make alternative builds.
+
 ENV	FFMPEG_VERSION		2.4.2
-ENV	FDKAAC_VERSION  	0.1.3
 ENV	YASM_VERSION    	1.3.0
+ENV	FDKAAC_VERSION  	0.1.3
 #ENV	LAME_VERSION    	3.99.5
 #ENV	FAAC_VERSION    	1.28
 #ENV	XVID_VERSION    	1.3.3
