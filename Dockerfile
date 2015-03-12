@@ -4,17 +4,22 @@
 # 	Then the next step is to export the compiled binaries into an untouched base debian image
 # 	This results in a ~128MB image to use, vs a ~395MB file.
 # 	FYI:  this image is useable....I just like having a smaller base image to download.
-
-FROM		debian:wheezy
-MAINTAINER	Nachochip <blockchaincolony@gmail.com>
-
 # some of these options I don't use, so I commented them out.
 # My builds include only FFMPEG + libfdk_aac + latest x264
 # I don't need anything else.  If you need anything included, email me and I can make alternative builds.
 
-ENV	FFMPEG_VERSION		2.4.2
+FROM		debian:wheezy
+MAINTAINER	Nachochip <blockchaincolony@gmail.com>
+
+ENV	FFMPEG_VERSION		2.3
+	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
+	# monitor releases at https://github.com/yasm/yasm/releases
 ENV	FDKAAC_VERSION  	0.1.3
+	# monitor releases at https://github.com/mstorsjo/fdk-aac/releases
+# x264
+	# this project does not use release versions at this time
+	# monitor project at http://git.videolan.org/?p=x264.git;a=shortlog
 #ENV	LAME_VERSION    	3.99.5
 #ENV	FAAC_VERSION    	1.28
 #ENV	XVID_VERSION    	1.3.3
@@ -27,7 +32,7 @@ RUN bash -c 'set -euo pipefail'
 RUN apt-get update
 RUN apt-get install -y autoconf automake gcc build-essential git libtool make nasm zlib1g-dev tar curl
 
-# yasm
+# YASM
 RUN DIR=$(mktemp -d) && cd ${DIR} && \
               curl -Os http://www.tortall.net/projects/yasm/releases/yasm-${YASM_VERSION}.tar.gz && \
               tar xzvf yasm-${YASM_VERSION}.tar.gz && \
@@ -48,8 +53,8 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               make distclean&& \
               rm -rf ${DIR}
 
-# libmp3lame
-#DIR=$(mktemp -d) && cd ${DIR} && \
+# LAME
+#RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              curl -L -Os http://downloads.sourceforge.net/project/lame/lame/${LAME_VERSION%.*}/lame-${LAME_VERSION}.tar.gz  && \
 #              tar xzvf lame-${LAME_VERSION}.tar.gz  && \
 #              cd lame-${LAME_VERSION} && \
@@ -59,9 +64,9 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              make distclean&& \
 #              rm -rf ${DIR}
 
-
-# faac + http://stackoverflow.com/a/4320377
-#DIR=$(mktemp -d) && cd ${DIR} && \
+# FAAC
+	# This combines faac + http://stackoverflow.com/a/4320377
+#RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              curl -L -Os http://downloads.sourceforge.net/faac/faac-${FAAC_VERSION}.tar.gz  && \
 #              tar xzvf faac-${FAAC_VERSION}.tar.gz  && \
 #              cd faac-${FAAC_VERSION} && \
@@ -72,8 +77,8 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              make install &&\
 #              rm -rf ${DIR}
 
-# xvid
-#DIR=$(mktemp -d) && cd ${DIR} && \
+# XVID
+#RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              curl -L -Os  http://downloads.xvid.org/downloads/xvidcore-${XVID_VERSION}.tar.gz  && \
 #              tar xzvf xvidcore-${XVID_VERSION}.tar.gz && \
 #              cd xvidcore/build/generic && \
@@ -82,7 +87,7 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              make install&& \
 #              rm -rf ${DIR}
 
-# fdk-aac
+# FDK_AAC
 RUN DIR=$(mktemp -d) && cd ${DIR} && \
               curl -s https://codeload.github.com/mstorsjo/fdk-aac/tar.gz/v${FDKAAC_VERSION} | tar zxvf - && \
               cd fdk-aac-${FDKAAC_VERSION} && \
@@ -93,8 +98,8 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               make distclean && \
               rm -rf ${DIR}
 
-# ffmpeg
-# removed these flags from configure:  --enable-libfaac --enable-libmp3lame  --enable-libxvid
+# FFMPEG
+	# I removed these flags from configure:  --enable-libfaac --enable-libmp3lame  --enable-libxvid
 RUN DIR=$(mktemp -d) && cd ${DIR} && \
               curl -Os http://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz && \
               tar xzvf ffmpeg-${FFMPEG_VERSION}.tar.gz && \
@@ -108,8 +113,8 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               hash -r && \
               rm -rf ${DIR}
 
-# mplayer
-#DIR=$(mktemp -d) && cd ${DIR} && \
+# MPLAYER
+#RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              curl -Os http://mplayerhq.hu/MPlayer/releases/MPlayer-${MPLAYER_VERSION}.tar.xz && \
 #              tar xvf MPlayer-${MPLAYER_VERSION}.tar.xz && \
 #              cd MPlayer-${MPLAYER_VERSION} && \
@@ -122,9 +127,7 @@ RUN apt-get purge -y autoconf automake gcc build-essential git libtool make nasm
 RUN apt-get clean
 RUN apt-get autoclean
 
-#RUN rm -rf /var/lib/yum/yumdb/*
 RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/libc.conf
 
 CMD           ["--help"]
 ENTRYPOINT    ["ffmpeg"]
-
