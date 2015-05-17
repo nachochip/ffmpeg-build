@@ -11,11 +11,11 @@
 FROM		debian:wheezy
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
-ENV	FFMPEG_VERSION		2.6.1
+ENV	FFMPEG_VERSION		2.4.8
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
 	# monitor releases at https://github.com/yasm/yasm/releases
-ENV	FDKAAC_VERSION  	0.1.3
+ENV	FDKAAC_VERSION  	0.1.4
 	# monitor releases at https://github.com/mstorsjo/fdk-aac/releases
 # x264
 	# this project does not use release versions at this time
