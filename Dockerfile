@@ -7,8 +7,9 @@
 # some of these options I don't use, so I commented them out.
 # My builds include only FFMPEG + libfdk_aac + latest x264
 # I don't need anything else.  If you need anything included, email me and I can make alternative builds.
+# Trying out version numbers vs version names to keep track of stable debian.  7=wheezy,currently stable
 
-FROM		debian:wheezy
+FROM		debian:7
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
 ENV	FFMPEG_VERSION		2.7.1
