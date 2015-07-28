@@ -51,7 +51,7 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               ./configure --prefix="$SRC" --bindir="${SRC}/bin" --enable-static && \
               make && \
               make install && \
-              make distclean&& \
+              make distclean && \
               rm -rf ${DIR}
 
 # LAME
@@ -62,7 +62,7 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              ./configure --prefix="${SRC}" --bindir="${SRC}/bin" --disable-shared --enable-nasm && \
 #              make && \
 #              make install && \
-#              make distclean&& \
+#              make distclean && \
 #              rm -rf ${DIR}
 
 # FAAC
@@ -85,7 +85,7 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
 #              cd xvidcore/build/generic && \
 #              ./configure --prefix="${SRC}" --bindir="${SRC}/bin" && \
 #              make && \
-#              make install&& \
+#              make install && \
 #              rm -rf ${DIR}
 
 # FDK_AAC
