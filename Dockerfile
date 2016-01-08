@@ -7,18 +7,18 @@
 # some of these options I don't use, so I commented them out.
 # My builds include only FFMPEG + libfdk_aac + latest x264
 # I don't need anything else.  If you need anything included, email me and I can make alternative builds.
-# Trying out version numbers vs version names to keep track of stable debian.  7=wheezy,currently stable
+# I will be tracking the 'stable' release
 
-FROM		debian:7
+FROM		debian:stable
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
-ENV	FFMPEG_VERSION		2.4.11
+ENV	FFMPEG_VERSION		2.4.12
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
 	# monitor releases at https://github.com/yasm/yasm/releases
 ENV	FDKAAC_VERSION  	0.1.4
 	# monitor releases at https://github.com/mstorsjo/fdk-aac/releases
-# x264
+#ENV	x264
 	# this project does not use release versions at this time
 	# monitor project at http://git.videolan.org/?p=x264.git;a=shortlog
 #ENV	LAME_VERSION    	3.99.5
