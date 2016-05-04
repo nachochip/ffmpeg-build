@@ -12,7 +12,7 @@
 FROM		debian:stable
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
-ENV	FFMPEG_VERSION		2.5.11
+ENV	FFMPEG_VERSION		2.6.7
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
 	# monitor releases at https://github.com/yasm/yasm/releases
