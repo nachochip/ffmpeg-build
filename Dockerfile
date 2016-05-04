@@ -2,17 +2,18 @@
 # This Dockerfile is based on docker image  rottenberg/ffmpeg
 # The purpose behind this is to build ffmpeg inside a debian container.
 # 	Then the next step is to export the compiled binaries into an untouched base debian image
-# 	This results in a ~128MB image to use, vs a ~395MB file.
+# 	This results in a ~50% images size reduction.
 # 	FYI:  this image is useable....I just like having a smaller base image to download.
-# some of these options I don't use, so I commented them out.
-# My builds include only FFMPEG + libfdk_aac + latest x264
+# Some of these options I don't use, so I commented them out.
+# My builds include only FFMPEG + libfdk_aac + latest x264 + Decklink(Blackmagic)
+# I am including Decklink(Blackmagic) so I can utilize those devices
 # I don't need anything else.  If you need anything included, email me and I can make alternative builds.
-# I will be tracking the 'stable' release
+# I will be tracking the 'stable' rolling release of Debian
 
 FROM		debian:stable
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
-ENV	FFMPEG_VERSION		2.7.7
+ENV	FFMPEG_VERSION		2.8.6
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
 	# monitor releases at https://github.com/yasm/yasm/releases
@@ -25,6 +26,7 @@ ENV	FDKAAC_VERSION  	0.1.4
 #ENV	FAAC_VERSION    	1.28
 #ENV	XVID_VERSION    	1.3.3
 #ENV	MPLAYER_VERSION 	1.1.1
+ENV	BLACKMAGIC_SDK_VERSION	10.5.2
 ENV	SRC             	/usr/local
 ENV	LD_LIBRARY_PATH 	${SRC}/lib
 ENV	PKG_CONFIG_PATH 	${SRC}/lib/pkgconfig
@@ -99,6 +101,10 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               make distclean && \
               rm -rf ${DIR}
 
+# Blackmagic SDK
+RUN cd /usr/src/ && \
+	      curl -s https://codeload.github.com/nachochip/Blackmagic-SDK/tar.gz/${BLACKMAGIC_SDK_VERSION} | tar xzvf -
+
 # FFMPEG
 	# I removed these flags from configure:  --enable-libfaac --enable-libmp3lame  --enable-libxvid
 RUN DIR=$(mktemp -d) && cd ${DIR} && \
@@ -107,7 +113,9 @@ RUN DIR=$(mktemp -d) && cd ${DIR} && \
               cd ffmpeg-${FFMPEG_VERSION} && \
               ./configure --prefix="${SRC}" --extra-cflags="-I${SRC}/include" --extra-ldflags="-L${SRC}/lib" --bindir="${SRC}/bin" \
               --extra-libs=-ldl --enable-version3 --enable-libx264 --enable-gpl \
-              --enable-postproc --enable-nonfree --enable-avresample --enable-libfdk_aac --disable-debug --enable-small && \
+              --enable-postproc --enable-nonfree --enable-avresample --enable-libfdk_aac --disable-debug --enable-small \
+              --enable-decklink --extra-cflags=-I/usr/src/Blackmagic-SDK-${BLACKMAGIC_SDK_VERSION}/Linux/include/ \
+              --extra-ldflags=-L/usr/src/Blackmagic-SDK-${BLACKMAGIC_SDK_VERSION}/Linux/include/ && \
               make && \
               make install && \
               make distclean && \
