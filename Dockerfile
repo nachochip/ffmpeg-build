@@ -13,7 +13,7 @@
 FROM		debian:stable
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
 
-ENV	FFMPEG_VERSION		2.8.7
+ENV	FFMPEG_VERSION		3.0
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 ENV	YASM_VERSION    	1.3.0
 	# monitor releases at https://github.com/yasm/yasm/releases
@@ -26,7 +26,7 @@ ENV	FDKAAC_VERSION  	0.1.4
 #ENV	FAAC_VERSION    	1.28
 #ENV	XVID_VERSION    	1.3.3
 #ENV	MPLAYER_VERSION 	1.1.1
-ENV	BLACKMAGIC_SDK_VERSION	10.5.4
+ENV	BLACKMAGIC_SDK_VERSION	10.6.6
 	# monitor my own releases at https://github.com/nachochip/Blackmagic-SDK/releases
 	# the origin of the drivers comes from https://www.blackmagicdesign.com/support/family/capture-and-playback
 	# I roll them into github to track it better, and condense to only linux-drivers
