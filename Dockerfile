@@ -8,7 +8,7 @@
 # My builds include only FFMPEG + libfdk_aac + latest x264 + Decklink(Blackmagic)
 # I am including Decklink(Blackmagic) so I can utilize those devices
 # I don't need anything else.  If you need anything included, email me and I can make alternative builds.
-# I will be tracking the 'stable' rolling release of Debian
+# I will be tracking the 'stable' rolling release of Debian 
 
 FROM		debian:stable
 MAINTAINER	Nachochip <blockchaincolony@gmail.com>
