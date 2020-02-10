@@ -144,14 +144,14 @@ RUN cd /usr/src/ && \
 
 
 # !! Working on this now !!
-ENV	FFMPEG_VERSION		3.2.14
+ENV	FFMPEG_VERSION		3.3.6
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
-	# 4.2 works, no fails
-	# 4.1 works, no fails
-	# 4.0 works, no fails
+	# 4.2-.2 works, no fails
+	# 4.1-.5 works, no fails
+	# 4.0-.5 works, no fails
 	# 3.5 line does not exist
-	# 3.4.2 works, 3.4.1 fails
-	# 3.3.6 works, 3.3.5 fails
+	# 3.4.2-7 works, 3.4.1 fails
+	# 3.3.6-9 works, 3.3.5 fails
 	# 3.2.10-14 works, 3.2.9 fails
 	# 3.2.4 was last one released by nachochip, next to release is 3.2.5, but error in x264/ffmpeg
 	# I'm not working on anything before this
