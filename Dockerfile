@@ -144,7 +144,7 @@ RUN cd /usr/src/ && \
 
 
 # !! Working on this now !!
-ENV	FFMPEG_VERSION		3.2.10
+ENV	FFMPEG_VERSION		3.2.11
 	# monitor releases at https://github.com/FFmpeg/FFmpeg/releases
 	# 4.2 works, no fails
 	# 4.1 works, no fails
